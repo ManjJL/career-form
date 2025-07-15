@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Path Activation Guide</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/css/intlTelInput.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      background-color: #004CFF;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Get Your Free Career Path Activation Guide</h2>
+
+  <form id="acForm" method="POST" action="https://mkjconsultingltd.activehosted.com/proc.php">
+    <input type="hidden" name="u" value="3">
+    <input type="hidden" name="f" value="3">
+    <input type="hidden" name="s" value="">
+    <input type="hidden" name="c" value="0">
+    <input type="hidden" name="m" value="0">
+    <input type="hidden" name="act" value="sub">
+    <input type="hidden" name="v" value="2">
+    <input type="hidden" name="or" value="92dd386f69c89428206c129c41e40473">
+
+    <input type="text" name="firstname" placeholder="First Name" required>
+    <input type="text" name="lastname" placeholder="Last Name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+
+    <select name="field[1]" required>
+      <option value="">Select Career Change Status</option>
+      <option value="In process of career change">In process of career change</option>
+      <option value="Thinking of possible career change">Thinking of possible career change</option>
+      <option value="Tired of job and not sure what to do">Tired of job and not sure what to do</option>
+    </select>
+
+    <select name="field[2]" required>
+      <option value="">Select Biggest Challenge</option>
+      <option value="Can't find the right role">Can't find the right role</option>
+      <option value="Can't decide what to do">Can't decide what to do</option>
+      <option value="Know what I want to do but don't know how to get there">
+        Know what I want to do but don't know how to get there
+      </option>
+    </select>
+
+    <input type="submit" value="Get My Free Guide!">
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/intlTelInput.min.js"></script>
+  <script>
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+      initialCountry: "auto",
+      separateDialCode: true,
+      geoIpLookup: function(success) {
+        fetch("https://ipinfo.io/json?token=5f56b0c5c871de")
+          .then((resp) => resp.json())
+          .then((resp) => success(resp.country))
+          .catch(() => success("GB"));
+      },
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/utils.js"
+    });
+
+    document.getElementById("acForm").addEventListener("submit", function (e) {
+      const phoneValid = iti.isValidNumber();
+      if (!phoneValid) {
+        e.preventDefault();
+        alert("Please enter a valid phone number.");
+        return false;
+      }
+      phoneInput.value = iti.getNumber();
+      setTimeout(function () {
+        window.location.href = "https://www.mkjconsulting.ltd/thankyou-book-a-call-fb";
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

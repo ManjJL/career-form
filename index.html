@@ -1,132 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Career Form</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/css/intlTelInput.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Path Activation Guide</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/css/intlTelInput.min.css" />
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f9f9f9;
       padding: 20px;
+    }
+    form {
       max-width: 500px;
       margin: auto;
-      background: #f9f9f9;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    form {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
-    }
-
-    input, select, button {
+    input, select {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-      border-radius: 4px;
+      padding: 12px;
+      margin-bottom: 15px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
+      border-radius: 6px;
+      font-size: 16px;
     }
-
     button {
       background-color: #004CFF;
       color: white;
       border: none;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
       cursor: pointer;
+      width: 100%;
     }
-
-    button:hover {
-      background-color: #0033cc;
-    }
-
     .error {
       color: red;
       font-size: 14px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
 
-  <h2>Get Your Free Guide</h2>
+  <form id="career-form" action="https://mkjconsultingltd.activehosted.com/proc.php" method="POST" novalidate>
+    <h2 style="text-align:center; margin-bottom: 20px;">Get Your Free Guide</h2>
 
-  <form id="careerForm">
-    <input type="text" name="firstname" placeholder="First Name" required>
-    <input type="text" name="lastname" placeholder="Last Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>
+    <!-- Hidden ActiveCampaign Fields -->
+    <input type="hidden" name="u" value="3">
+    <input type="hidden" name="f" value="3">
+    <input type="hidden" name="s">
+    <input type="hidden" name="c" value="0">
+    <input type="hidden" name="m" value="0">
+    <input type="hidden" name="act" value="sub">
+    <input type="hidden" name="v" value="2">
+    <input type="hidden" name="or" value="92dd386f69c89428206c129c41e40473">
+
+    <!-- Form Fields -->
+    <input type="text" name="firstname" placeholder="First Name *" required />
+    <input type="text" name="lastname" placeholder="Last Name *" required />
+    <input type="email" name="email" placeholder="Email *" required />
+    <input type="tel" id="phone" name="phone" placeholder="Phone Number *" required />
 
     <select name="field[1]" required>
-      <option value="">Career Change Status</option>
+      <option value="">Career Change Status *</option>
       <option value="In process of career change">In process of career change</option>
       <option value="Thinking of possible career change">Thinking of possible career change</option>
       <option value="Tired of job and not sure what to do">Tired of job and not sure what to do</option>
     </select>
 
     <select name="field[2]" required>
-      <option value="">Biggest Challenge</option>
+      <option value="">Biggest Challenge *</option>
       <option value="Can't find the right role">Can't find the right role</option>
       <option value="Can't decide what to do">Can't decide what to do</option>
       <option value="Know what I want to do but don't know how to get there">Know what I want to do but don't know how to get there</option>
     </select>
 
-    <button type="submit">Get My Free Guide</button>
-    <div class="error" id="error-msg" style="display:none;"></div>
+    <div id="phone-error" class="error" style="display: none;">Enter a valid phone number</div>
+
+    <button type="submit">Get My Free Guide!</button>
   </form>
 
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/intlTelInput.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/utils.js"></script>
   <script>
-    const phoneInput = document.querySelector("#phone");
-    const iti = window.intlTelInput(phoneInput, {
+    const form = document.getElementById('career-form');
+    const phoneInputField = document.querySelector("#phone");
+    const phoneError = document.getElementById("phone-error");
+
+    const iti = window.intlTelInput(phoneInputField, {
       separateDialCode: true,
-      initialCountry: "auto",
-      geoIpLookup: function(callback) {
-        fetch("https://ipapi.co/json")
-          .then(res => res.json())
-          .then(data => callback(data.country_code))
-          .catch(() => callback("GB"));
-      },
       utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/utils.js"
     });
 
-    document.getElementById("careerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const errorMsg = document.getElementById("error-msg");
-
+    form.addEventListener("submit", function (e) {
       if (!iti.isValidNumber()) {
-        errorMsg.style.display = "block";
-        errorMsg.textContent = "Please enter a valid phone number.";
-        return;
+        e.preventDefault();
+        phoneError.style.display = "block";
+        phoneInputField.classList.add("error");
+      } else {
+        phoneError.style.display = "none";
+        phoneInputField.classList.remove("error");
+
+        // replace raw input with full international number
+        const hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "phone";
+        hiddenInput.value = iti.getNumber();
+        form.appendChild(hiddenInput);
       }
+    });
 
-      errorMsg.style.display = "none";
-
-      // Build form data
-      const formData = new FormData(this);
-      formData.set("phone", iti.getNumber());
-
-      // Submit to ActiveCampaign
-      fetch("https://mkjconsultingltd.activehosted.com/proc.php", {
-        method: "POST",
-        body: formData
-      })
-      .then(() => {
+    // Redirect after submit (ActiveCampaign auto-redirect)
+    form.addEventListener("submit", function () {
+      setTimeout(function () {
         window.location.href = "https://www.mkjconsulting.ltd/thankyou-book-a-call-fb";
-      })
-      .catch(() => {
-        errorMsg.style.display = "block";
-        errorMsg.textContent = "Submission failed. Please try again.";
-      });
+      }, 500);
     });
   </script>
-
 </body>
 </html>

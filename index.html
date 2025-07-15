@@ -3,56 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Change Form</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/css/intlTelInput.css" />
+  <title>Career Path Activation Form</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/css/intlTelInput.min.css" />
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: #fff;
       padding: 20px;
-      background-color: #f9f9f9;
+      margin: 0;
     }
     form {
       max-width: 500px;
-      margin: 0 auto;
-      background: #fff;
+      margin: auto;
+      background: #f9f9f9;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
     }
     label {
+      font-weight: 600;
       display: block;
-      margin: 15px 0 5px;
+      margin-top: 15px;
     }
-    input, select, button {
+    input, select {
       width: 100%;
       padding: 10px;
+      margin-top: 5px;
       font-size: 16px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
     button {
-      background-color: #004CFF;
+      background: #004CFF;
       color: white;
       border: none;
-      cursor: pointer;
+      padding: 14px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 8px;
       margin-top: 20px;
-    }
-    button:hover {
-      background-color: #0033cc;
+      cursor: pointer;
     }
     .error {
-      border-color: red;
-    }
-    .error-message {
       color: red;
       font-size: 14px;
-      display: none;
     }
   </style>
 </head>
 <body>
-  <h2>Get Your Free Guide</h2>
-  <form id="career-form" action="https://mkjconsultingltd.activehosted.com/proc.php" method="POST" novalidate target="_self">
+
+  <form id="careerForm" action="https://mkjconsultingltd.activehosted.com/proc.php" method="POST" target="_blank">
+    <h2>Get Your Free Guide</h2>
+
     <input type="hidden" name="u" value="3" />
     <input type="hidden" name="f" value="3" />
     <input type="hidden" name="s" />
@@ -60,77 +61,65 @@
     <input type="hidden" name="m" value="0" />
     <input type="hidden" name="act" value="sub" />
     <input type="hidden" name="v" value="2" />
+    <input type="hidden" name="or" value="92dd386f69c89428206c129c41e40473" />
 
-    <label for="firstname">First Name *</label>
-    <input type="text" id="firstname" name="firstname" placeholder="Type your first name" required />
+    <label for="firstname">First Name*</label>
+    <input type="text" name="firstname" placeholder="Type your first name" required />
 
-    <label for="lastname">Last Name *</label>
-    <input type="text" id="lastname" name="lastname" placeholder="Type your last name" required />
+    <label for="lastname">Last Name*</label>
+    <input type="text" name="lastname" placeholder="Type your last name" required />
 
-    <label for="email">Email *</label>
-    <input type="email" id="email" name="email" placeholder="Type your email" required />
+    <label for="email">Email*</label>
+    <input type="email" name="email" placeholder="Type your email" required />
 
-    <label for="phone">Phone *</label>
-    <input type="tel" id="phone" name="phone-iti" placeholder="Type your phone number" required />
-    <div id="phone-error" class="error-message">Enter a valid phone number.</div>
+    <label for="phone">Phone*</label>
+    <input type="tel" name="phone" id="phone" placeholder="Type your phone number" required />
 
-    <label for="field[1]">Career Change Status *</label>
-    <select name="field[1]" id="field[1]" required>
-      <option value="">--Select--</option>
+    <label for="field[1]">Career Change Status*</label>
+    <select name="field[1]" required>
+      <option value="">-- Select --</option>
       <option value="In process of career change">In process of career change</option>
       <option value="Thinking of possible career change">Thinking of possible career change</option>
       <option value="Tired of job and not sure what to do">Tired of job and not sure what to do</option>
     </select>
 
-    <label for="field[2]">Biggest Challenge *</label>
-    <select name="field[2]" id="field[2]" required>
-      <option value="">--Select--</option>
-      <option value="Can't find the right role">Can't find the right role</option>
-      <option value="Can't decide what to do">Can't decide what to do</option>
-      <option value="Know what I want to do but don't know how to get there">Know what I want to do but don't know how to get there</option>
+    <label for="field[2]">Biggest Challenge*</label>
+    <select name="field[2]" required>
+      <option value="">-- Select --</option>
+      <option value="Can&#039;t find the right role">Can't find the right role</option>
+      <option value="Can&#039;t decide what to do">Can't decide what to do</option>
+      <option value="Know what I want to do but don&#039;t know how to get there">Know what I want to do but don't know how to get there</option>
     </select>
 
     <button type="submit">Get My Free Guide!</button>
   </form>
 
-  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/intlTelInput.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"></script>
   <script>
-    const form = document.getElementById("career-form");
-    const phoneInputField = document.querySelector("#phone");
-    const phoneError = document.querySelector("#phone-error");
-
-    const iti = intlTelInput(phoneInputField, {
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
       separateDialCode: true,
       initialCountry: "auto",
-      geoIpLookup: function (success) {
+      geoIpLookup: function (success, failure) {
         fetch("https://ipapi.co/json")
-          .then((res) => res.json())
-          .then((data) => success(data.country_code))
+          .then(res => res.json())
+          .then(data => success(data.country_code))
           .catch(() => success("GB"));
       },
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@25.2.0/build/js/utils.js",
+      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/utils.js"
     });
 
-    form.addEventListener("submit", function (e) {
+    document.getElementById("careerForm").addEventListener("submit", function (e) {
       if (!iti.isValidNumber()) {
         e.preventDefault();
-        phoneError.style.display = "block";
-        phoneInputField.classList.add("error");
-      } else {
-        phoneError.style.display = "none";
-        phoneInputField.classList.remove("error");
-
-        const hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.name = "phone";
-        hiddenInput.value = iti.getNumber();
-        form.appendChild(hiddenInput);
-
-        setTimeout(function () {
-          window.top.location.href = "https://www.mkjconsulting.ltd/thankyou-book-a-call-fb";
-        }, 1000);
+        alert("Please enter a valid phone number.");
+        return false;
       }
+
+      phoneInput.value = iti.getNumber(); // replace input with full international number
     });
   </script>
+
 </body>
 </html>
